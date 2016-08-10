@@ -124,14 +124,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- Main Content -->
         <div class="content">
 
-         
- 
-
-
-
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
             <section data-route="home">
-              <paper-material elevation="1">
               
               <paper-material elevation="1">
                 <allowance-wallet web3="{{web3}}" account="{{account}}" balance="{{balance}}"></allowance-wallet>
@@ -139,7 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
               <paper-material elevation="1">
-               <allowance-create></allowance-create>
+               <allowance-create web3="{{web3}}" account="{{account}}"></allowance-create>
               </paper-material>
 
             </section>
@@ -147,7 +141,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <section data-route="kid">
               <paper-material elevation="1">
                 <h2 class="page-title">My allowance</h2>
-                <allowance-claim></allowance-claim>
+                <allowance-claim web3="{{web3}}" account="{{account}}"></allowance-claim>
 
               </paper-material>
             </section>

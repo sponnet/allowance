@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
 
 <dom-module id="allowance-create">
   <template>
@@ -27,9 +27,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Your allowance contract is at {{allowancecontract}}
     </template>
 
-
-
-
   </template>
   <script>
   (function() {
@@ -39,12 +36,149 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'allowance-create',
 
       properties: {
-        foo: {
+        web3: {
+          type: Object,
+          observer: '_dataready'
+        },
+        account: {
           type: String,
-          value: 'allowance-create',
-          notify: true
+          observer: '_dataready'
         }
-      }
+      },
+
+      
+
+        _dataready: function(){
+          if (!this.web3 || !this.account){
+            return;
+          }
+          //this._createContract();
+        },
+
+        fixaddress: function(address) {
+          function strStartsWith(str, prefix) {
+            return str.indexOf(prefix) === 0;
+          }
+
+          if (!strStartsWith(address, '0x')) {
+            return ('0x' + address);
+          }
+          return address;
+        },
+
+        _createContract: function() {
+
+          this.childaddress = "0xa54fd10ab7a38c56fc5e8d8dc5838fe812b47e7e";
+          this.amount = 2;
+          this.period = 7;
+          this.value = 4;
+
+          var self = this;
+          this.contracturl = this.resolveUrl('../../contracts/allowance.json');
+          this.importHref(this.contracturl, function(e) {
+
+              var contractjson = JSON.parse(e.target.import.body.innerText);
+
+              this.web3.eth.getGasPrice(function(err, result) {
+                var gasPrice = result.toNumber(10);
+
+                var allowanceContract = this.web3.eth.contract(contractjson.abi);
+                var allowance = allowanceContract.new(this.fixaddress(this.childaddress), this.amount, this.period, {
+                  from: this.fixaddress(this.account),
+                  data: contractjson.bytecode,
+                  gas: 3000000,
+                  gasPrice: gasPrice,
+                  gasLimit: 3000000,
+                  value: this.value * 1e18
+                }, function(e, contract) {
+                  if (e) {
+                    console.log('error creating contract', e);
+                    return;
+                  }
+                  console.log(e, contract);
+                  if (typeof contract.address !== 'undefined') {
+                    //debugger;
+                    this.allowancecontract = contract.address;
+
+                    app.$.toast.text = 'Allowance created!';
+                    app.$.toast.show();
+
+                  }
+                }.bind(this));
+
+
+                this.web3.eth.sendTransaction({
+                  from: this.fixaddress(this.account),
+                  to: this.fixaddress(this.childaddress),
+                  gas: 300000,
+                  gasPrice: gasPrice,
+                  gasLimit: 3000000,
+                  value: this.web3.toWei('0.1', 'ether')
+                }, function(error, result) {
+
+                  if (error) {
+                    console.log('TX error', error);
+                    return cb(false);
+                  }
+
+                  console.log('txhash=', result);
+
+                  // this.waitTx(result, function(success) {
+                  //   if (!success) {
+                  //     console.log('waitTX failed');
+                  //   } else {
+                  //     console.log('mined TXhash', result);
+                  //   }
+                  // }.bind(this));
+                }.bind(this));
+
+
+
+              }.bind(this));
+
+            },
+            function(e) {
+              console.log('ERROR!', e);
+            });
+
+        },
+
+      waitTx: function(txHash, callback) {
+        /*
+         * Watch for a particular transaction hash and call the awaiting function when done;
+         */
+        var blockCounter = 15;
+        // Wait for tx to be finished
+        var filter = this.web3.eth.filter('latest').watch(function(err, blockHash) {
+          if (blockCounter <= 0) {
+            filter.stopWatching();
+            filter = null;
+            console.warn('!! Tx expired !!');
+            if (callback)
+              return callback(false);
+            else
+              return false;
+          }
+          // Get info about latest Ethereum block
+          var block = this.web3.eth.getBlock(blockHash);
+          --blockCounter;
+          console.log('We welcome on stage: Block ', block.number);
+          // Found tx hash?
+          if (block.transactions.indexOf(txHash) > -1) {
+            // Tx is finished
+            filter.stopWatching();
+            filter = null;
+            if (callback)
+              return callback(true);
+            else
+              return true;
+            // Tx hash not found yet?
+          } else {
+            // console.log('Waiting tx..', blockCounter);
+          }
+        }.bind(this));
+      },
+
     });
   })();
   </script>
