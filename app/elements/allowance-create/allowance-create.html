@@ -9,7 +9,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <dom-module id="allowance-create">
   <template>
@@ -20,9 +22,68 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+        background-color: var(--primary-color);
+/*        --paper-input-container-focus-color: white;*/
+      }
+      .tapper {
+        border: 2px solid yellow;
+        width: 200px;
+        border-radius: 5px;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 10px;
+
+      }
+      .tapper:hover {
+        cursor: pointer;
+      }
+
+      .givver {
+        border: 2px solid yellow;
+        width: 80px;
+        border-radius: 5px;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 10px;
+        margin-right: 10px;
+
+      }
+      .givver:hover {
+        cursor: pointer;
+      }
+
+      paper-input {
+        background-color: white;
+        box-sizing: border-box;
+        padding: 0px 20px 20px 20px;
+        margin: 10px 0px 10px 0px;
+      }
+
+      .nextto {
+        width: 100%;
+        @apply(--layout-horizontal);
+                @apply(--layout-center);
+
       }
     </style>
-    <h1>Create Allowance</h1>
+    <template is="dom-if" if="{{collsclosed}}">
+    <h1 class="tapper" on-tap="showCollapser">Create Allowance</h1>
+    </template>
+
+
+
+        <iron-collapse id="creator">
+          <paper-input label="childadress" value="{{childadress}}"></paper-input>
+          <paper-input label="amount" value="{{amount}}"></paper-input>
+          <paper-input label="period" value="{{period}}"></paper-input>
+          <paper-input label="value" value="{{value}}"></paper-input>
+          <div class="nextto">
+    <h1 class="givver">Give!</h1>
+    <h1 on-tap="showCollapser">close</h1>
+    </div>
+        </iron-collapse>
+
+
     <template is="dom-if" if="{{allowancecontract}}">
     Your allowance contract is at {{allowancecontract}}
     </template>
@@ -43,8 +104,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           value: 'allowance-create',
           notify: true
+        },
+        collsclosed: {
+          type: Boolean,
+          value: true
+        },
+
+        amount: {
+          type: Number,
+          notify: true
         }
+
+      },
+
+
+      showCollapser: function(){
+        var creator = document.querySelector('#creator');
+        creator.toggle();
+        this.collsclosed=!this.collsclosed;
       }
+
+
     });
   })();
   </script>

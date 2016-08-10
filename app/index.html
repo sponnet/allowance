@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="Polymer Starter Kit">
-  <title>Polymer Starter Kit</title>
+  <title>Allowance App</title>
 
   <!-- Place favicon.ico in the `app/` directory -->
 
@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="application-name" content="PSK">
   <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
-
+  <link href='https://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -63,99 +63,82 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <paper-drawer-panel id="paperDrawerPanel">
-      <!-- Drawer Scroll Header Panel -->
-      <paper-scroll-header-panel drawer fixed>
-
-        <!-- Drawer Toolbar -->
-        <paper-toolbar id="drawerToolbar">
-          <span class="menu-name">Menu</span>
-        </paper-toolbar>
-
-        <!-- Drawer Content -->
-        <paper-menu attr-for-selected="data-route" selected="[[route]]">
-          <a data-route="home" href="{{baseUrl}}">
-            <iron-icon icon="home"></iron-icon>
-            <span>Parent</span>
-          </a>
-
-          <a data-route="kid" href="{{baseUrl}}kid">
-            <iron-icon icon="home"></iron-icon>
-            <span>Kid</span>
-          </a>
-        </paper-menu>
-      </paper-scroll-header-panel>
-
-      <!-- Main Area -->
-      <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
-        <!-- Main Toolbar -->
-        <paper-toolbar id="mainToolbar" class="tall">
-          <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
-
-          <span class="space"></span>
-
-<!-- 
-  <web3-wallet
-      password="test"
-      id="web3wallet"
-      walletname="allowance-wallet"
-      account="{{account}}"
-      balance="{{balance}}"
-      host="http://109.123.70.141:8545"
-      web3="{{web3}}"></web3-wallet>
- -->
      <web3-wallet  id="web3wallet" password="test" host="http://109.123.70.141:8545" account="{{account}}" balance="{{balance}}" web3="{{web3}}" keystore="{{keystore}}"></web3-wallet>
 
-          <!-- Toolbar icons -->
-        <!--   <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
- -->
-          <!-- Application name -->
-          <div class="middle middle-container">
-            <div class="app-name">Allowance app</div>
-          </div>
-
-          <!-- Application sub title -->
-          <div class="bottom bottom-container">
-            <div class="bottom-title">The future of the web today</div>
-          </div>
-        </paper-toolbar>
 
         <!-- Main Content -->
         <div class="content">
-
-         
- 
-
-
-
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
             <section data-route="home">
-              <paper-material elevation="1">
-              
-              <paper-material elevation="1">
-                <allowance-wallet web3="{{web3}}" account="{{account}}" balance="{{balance}}"></allowance-wallet>
-               </paper-material>
+        <div class="parent canvas">
 
+            <div class="toppertje">
+            <h1>Allowance app</h1>
+            </div>
+            <div class="centerit">
 
-              <paper-material elevation="1">
+            <div class="switch">
+              <a href="/kid">kid</a>
+             <div class="switchto">
+                  <img src="images/rs_634x855-150825113747-634-macaulay-culkin-2000.jpg">
+            </div>
+            </div>
+
+                <div class="announce">
+                  <div class="role">
+                  <div class="roleimg">
+                  <img src="images/crazy-dad.jpg">
+                  </div>
+                  <h2>Parent.</h2>
+                  </div>
+                  <div class="txt">
+                  <allowance-wallet web3="{{web3}}" account="{{account}}" balance="{{balance}}"></allowance-wallet>
+                  </div>
+
+              </div>
                <allowance-create></allowance-create>
-              </paper-material>
-
+               </div>
+              </div>
             </section>
 
             <section data-route="kid">
-              <paper-material elevation="1">
-                <h2 class="page-title">My allowance</h2>
+        <div class="kid canvas">
+
+            <div class="toppertje">
+            <h1>Allowance app</h1>
+            </div>
+            <div class="centerit">
+
+            <div class="switch">
+              <a href="/">parent</a>
+             <div class="switchto">
+                  <img src="images/crazy-dad.jpg">
+            </div>
+            </div>
+
+                <div class="announce">
+                  <div class="role">
+                  <div class="roleimg">
+                  <img src="images/rs_634x855-150825113747-634-macaulay-culkin-2000.jpg">
+                  </div>
+                  <h2>Kid.</h2>
+                  </div>
+                  <div class="txt">
+                  <allowance-wallet web3="{{web3}}" account="{{account}}" balance="{{balance}}"></allowance-wallet>
+                  </div>
+
+              </div>
+
                 <allowance-claim></allowance-claim>
 
-              </paper-material>
+               </div>
+              </div>
+
             </section>
 
           </iron-pages>
         </div>
-      </paper-scroll-header-panel>
-    </paper-drawer-panel>
+
 
     <paper-toast id="toast">
       <span class="toast-hide-button" role="button" tabindex="0" onclick="app.$.toast.hide()">Ok</span>

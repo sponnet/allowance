@@ -15,9 +15,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+/*        --paper-input-container-focus-color: white;*/
+      }
+      .tapper {
+        border: 2px solid #7300FF;
+        width: 200px;
+        border-radius: 5px;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 10px;
+
+      }
+      .tapper:hover {
+        cursor: pointer;
+      }
+
+      paper-input {
+        background-color: white;
+        box-sizing: border-box;
+        padding: 0px 20px 20px 20px;
+        margin: 10px 0px 10px 0px;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <h1 class="tapper" on-tap="showCollapser">Create Allowance</h1>
+        <iron-collapse id="claimer">
+          <paper-input label="contractadress" value="{{contractadress}}"></paper-input>
+        </iron-collapse>
+
+
   </template>
   <script>
   (function() {
@@ -32,7 +57,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 'allowance-claim',
           notify: true
         }
+      },
+
+
+      showCollapser: function(){
+        var claimer = document.querySelector('#claimer');
+        claimer.toggle();
+        this.collsclosed=!this.collsclosed;
       }
+
     });
   })();
   </script>
