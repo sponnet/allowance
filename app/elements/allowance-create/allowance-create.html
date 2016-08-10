@@ -9,15 +9,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../iron-localstorage/iron-localstorage.html">
 
 <dom-module id="allowance-create">
   <template>
+  <iron-localstorage 
+      name="allowancecontract"
+      value="{{allowancecontract}}" 
+     </iron-localstorage>  
     <style>
       :host {
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <h1>Create Allowance</h1>
+    <template is="dom-if" if="{{allowancecontract}}">
+    Your allowance contract is at {{allowancecontract}}
+    </template>
+
+
+
+
   </template>
   <script>
   (function() {

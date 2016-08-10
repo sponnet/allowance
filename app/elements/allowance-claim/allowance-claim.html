@@ -10,31 +10,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<dom-module id="allowance-wallet">
+<dom-module id="allowance-claim">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <div>Your account address : 0x{{account}}</div>
-    <div>Your balance : {{balance}}</div>
+    <div>Hello from <span>{{foo}}</span></div>
   </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'allowance-wallet',
+      is: 'allowance-claim',
 
       properties: {
-        web3: {
-          type: Object,
-          observer: '_dataloaded'
-        },
-        account: {
+        foo: {
           type: String,
-          observer: '_dataloaded'          
+          value: 'allowance-claim',
+          notify: true
         }
       }
     });

@@ -124,16 +124,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <!-- Main Content -->
         <div class="content">
 
-           <paper-material elevation="1">
- <allowance-wallet web3="{{web3}}" account="{{account}}" balance="{{balance}}"></allowance-wallet>
- </paper-material>
+         
+ 
+
 
 
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
             <section data-route="home">
               <paper-material elevation="1">
-                <my-greeting></my-greeting>
-
+              
+  <paper-material elevation="1">
+                <allowance-wallet web3="{{web3}}" account="{{account}}" balance="{{balance}}"></allowance-wallet>
+ </paper-material>
+ 
                 <p class="subhead">You now have:</p>
                 <my-list></my-list>
 
