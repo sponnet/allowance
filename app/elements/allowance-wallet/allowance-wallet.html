@@ -16,9 +16,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .title {
+        font-size: 16px;
+        color: rgba(255,255,255,0.5); 
+      }
+
+      h2 {
+        font-size: 30px;
+        margin: 0px;
+        word-break:break-all;
+      }
+
     </style>
-    <div>Your account address : 0x{{account}}</div>
-    <div>Your balance : {{balance}}</div>
+    <div><h2><span class="title">My account address</span><br>0x{{account}}</h2></div>
+    <div><h2><span class="title">My balance</span><br>Ξ {{showbalance(balance)}}</h2></div>
   </template>
   <script>
   (function() {
@@ -36,6 +47,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           observer: '_dataloaded'          
         }
+      },
+
+      showbalance: function(balance) {
+        return balance / 1e18;
+
       }
     });
   })();
