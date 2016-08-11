@@ -1,5 +1,7 @@
 # Allowance
-A small polymer demo app
+A small polymer demo app - presented at the Api Craftsmanship meetup.
+Please checkout the meetup page for future meetups:
+
 
 ## Getting started
 
