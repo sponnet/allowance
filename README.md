@@ -1,9 +1,5 @@
 # Allowance
-A small polymer demo app - presented at the Api Craftsmanship meetup.
-Please checkout the meetup page for future meetups:
-
-http://www.meetup.com/API-Craftsmanship/
-
+A small polymer demo app showing Ethereum functionalities : an allowance from parent to kid using a smart contract.
 
 ## Getting started
 
